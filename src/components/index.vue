@@ -1,30 +1,35 @@
 <template>
   <div class="page">
     <h1>Hello World</h1>
+    <child @click.self='onClickChild'></child>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import { get } from '../utils/http';
 import { mapState } from "vuex";
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import Child from './child.vue';
 
-export default {
-  name: 'page',
+@Component({
+  name: 'ChildCompoenent',
   components: {
-
-  },
-  mounted() {
-    get('/getData').then(res=>{
-      console.log(res.data);
-    });
-  },
-  computed: {
-    ...mapState([]),
-  },
-  methods: {
-    
+    Child
   }
+})
+export default class HomePage extends Vue {
+  message:string = 'hello world';
+  onClick():void {
+    console.log('hello typescript')
+  }
+  onClickChild():void {
+    console.log('you click the child')
+  }
+  mounted() {
+    console.log('hello typescript');
+  }
+  
 }
 </script>
 <style lang="scss">

@@ -14,7 +14,7 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js',
+    app: './src/main.ts',
     vendor: ['vue'],
   },
   output: {
@@ -25,7 +25,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', 'tsx', '.vue', '.json', '.ts'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -70,6 +70,24 @@ module.exports = {
             preserveWhitespace: false
           }
         }
+      },
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        },
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts$/,
+        use: {
+          loader: 'tslint-loader',
+        },
+        enforce: 'pre',
+        exclude: /node_modules/,
       },
       {
         test: /\.js$/,
